@@ -1,0 +1,9 @@
+2 scenario while using interrupt
+
+
+1. if application state not run and be on wait or sleep
+that may take long time to proceed we use interrupt method on other thread to signal interrupt and InterruptException throw on waited thread
+
+2. if application take long time but on running state for example complex calculation and we don't want to wait for that
+we interrupt signal for that thread and handle interrupt signal on block may take time
+for after raise interrupt signal in that thread handle that and go out from that

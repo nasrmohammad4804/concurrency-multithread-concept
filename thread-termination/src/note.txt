@@ -1,0 +1,22 @@
+thread termination
+
+sometimes we want to terminate those thread
+
+note by default if at least 1 applicable thread exists then application don't stopped. even if main thread finished
+
+1. task completion .
+after that thread complete task or job we want to terminate that
+because help us to clean up resource
+
+2. application shut down
+after you shut down application by some way like System.exit() you want to terminate all threads
+
+3. in web application that use thread per each request if a request get timeout and cant process request we may want to terminate that
+
+4.infinite loop
+we use multi thread application for achieving responsiveness and performance
+if thread take long time . responsiveness concept is lost
+
+
+
+approach we want to implement that interrupt signal and using daemon thread
