@@ -1,0 +1,6 @@
+join
+we use this feature while one thread depends on another thread
+then we use join method
+
+for example task 1 for run need to task2 complete
+then we block task1 and dont schedule until task2 complete
