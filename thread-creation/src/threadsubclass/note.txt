@@ -1,0 +1,5 @@
+we want to implement scenario with multi thread mechanism
+suppose we have  robbers that they try to unlock vault concurrently
+and had monitor show police count down from 10 second at show in each second
+if any robber can find password less than 10 second they are successful and scape from that
+otherwise police won
