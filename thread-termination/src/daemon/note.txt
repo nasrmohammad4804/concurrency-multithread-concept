@@ -1,0 +1,13 @@
+daemon thread
+
+they are thread that give service to user defined thread
+
+they are background thread that don't prevent application from exiting if main thread terminate
+but if we have user defined thread . and at least one of them exists application don't exit until that terminate
+
+daemon used at such scenario that written below
+
+1. using background task that don't main focus on application
+for example in text editor consider daemon thread had duty for save text every 10 second
+and don't important and consideration while stop text editor app . and app dont wait for those thread to terminated
+they are running at background
