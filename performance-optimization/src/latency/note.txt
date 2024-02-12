@@ -1,0 +1,41 @@
+we divide task to n subtask
+note n task can be run on n thread and if n is less than number of cpu core
+for executing in parallel
+
+we need to answer few question
+1. how many subtask/thread to break original task
+2. breaking original task and aggregate result come for free
+3. can break any task to multiple subtask
+
+answer
+
+answer 1. n should be close to number of cpu core and subtask run fully in parallel if don't exists already significance process
+that we achieve fully utilizing cpu resource and run at parallel and give optimal performance
+but if we create thread more than cpu core give bad performance and increase latency
+
+note .
+1. number of thread be equal number of core optimal if any thread dont have interruption (wait - sleep)
+   because blocked until happens and increase latency . and all thread would be runnable state the whole time
+
+2. assumption is nothing else is running that consume lot of cpu that is impossible scenario but if my server doesnt computational task compare to my task
+we never achieve optimal  utilization, but we can close to that
+
+answer 2
+we accept some inherent cost for break task into subtask
+
+break task into small segment
+ +
+thread creation passing task to thread
+ +
+time for thread between  start() and scheduled by os
+ +
+time for wait until last thread finish task
+ +
+time for calculation of aggregation all subtask
+
+answer 3
+
+we can task into 3 type
+task can be dividable and execute parallel
+task can only execute on single thread
+partially broken to subtask and partially be sequentially

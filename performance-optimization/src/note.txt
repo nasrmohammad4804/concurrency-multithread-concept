@@ -1,0 +1,11 @@
+performance had different mean at every use case
+for example in backend application mean reducing response time or latency
+at machine learning model means have better and precise result
+
+
+ we need 2 performance definition
+ 1. latency (reduce time for single task to complete)
+ 2. throughput ( number of task can be complete at given a period)
+
+
+ we can achieve latency by divide single task to multiple subtask
