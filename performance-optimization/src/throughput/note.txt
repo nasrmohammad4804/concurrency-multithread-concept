@@ -1,0 +1,7 @@
+throughput .
+means number of task completed in given time measured by tasks/time unit
+
+by serving each task on different thead in parallel . we can improve throughput by N and N is number of thread equal number of core
+note task are completely independent
+
+also by using fix thread pool we eliminate the need to recreate the threads
