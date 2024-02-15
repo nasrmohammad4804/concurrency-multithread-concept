@@ -1,0 +1,11 @@
+represent data or state
+can be simple variable such as integer or string
+data structure like queue list
+file - connection to network or database
+message queue
+
+---------------------------------
+if we run this app we get different output every time because we used share resource but not define any critical section
+means item++ and item-- happening at same time and are not atomic operation
+
+atomic operation
