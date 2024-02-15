@@ -1,0 +1,66 @@
+process contain code data(heap) pcb block
+and at least 1 main thread for execute that
+
+but for every thread we have stack and instruction pointer
+
+stack is region where method are executed
+whenever we pass argument to function we passed to stack
+also all local variable on stack
+-> stack + instruction pointer = state of each thread execution
+
+local variable + argument passed store for each stack
+
+
+
+---------------------------------------------------
+
+all variable passed on stack  belong to particular thread and other thread have no access to that
+
+stack statically allocated when thread is created
+stack size is fixed and relatively small
+
+----------------------------------------
+
+heap memory region
+
+heap is shared memory region that belong to process
+all thread share whatever data is located on the heap
+
+what is allocated on the heap
+
+every object you created by new operator placed on heap
+
+every member of class or static variable even primitive or reference
+
+
+-----------------------------
+
+heap data (share between threads)
+-----------------------
+object created
+class member if primitive or reference type as well as with references
+static variable
+-----------------------
+
+
+stack data(exclusive)
+---------------------------
+reference
+
+local variable or local references
+
+
+
+
+
+
+
+
+
+
+
+
+important note about references
+
+can be allocated on the stack if defined at method
+can be allocated on heap together with parent object  if defined as class member
