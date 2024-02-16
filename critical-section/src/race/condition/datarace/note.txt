@@ -1,0 +1,19 @@
+data race
+
+means share resource modify by one thread and access to by other thread
+
+also sometimes compiler and cpu may execute the instruction out of
+order to optimize performance and utilization but also maintaining logical correctness of the code
+this feature for rearrange order of execution that change correctness is designed for improved performance and speed by cpu and compiler
+
+
+compiler re-arrange instruction for better
+branch prediction (optimized loop . if statement ...)
+
+
+synchronized :
+    solve both race condition and data race but has performance penalty
+
+volatile :
+    solve race condition for read/write to long and double variable
+    and solve all data race by guarantee order
