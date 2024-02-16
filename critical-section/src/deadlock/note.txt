@@ -1,0 +1,23 @@
+fine grain lock strategy vs coarse grain lock strategy
+
+
+fine grain means have lock for each shared resource but coarse grain means we have 1 lock for all resource (like synchronization)
+
+if we use lock for each share resource it can run better parallel execution but may occur deadlock
+
+note
+### condition may lead deadlock
+
+mutual exclusion : only one thread can have exclusive to a resource
+hold and wait : at least one thread is hold resource and waiting for another resource
+non-preemptive allocation : a resource is released only after thread is done using it
+circular wait : chain of at least two thread . each one is holding one resource and waiting for another resource
+
+if at least one of above condition is not meet then we dont have deadlock
+we choose simple condition is 4th condition (circular wait) we change order of acquire lock to be same in all threads
+but order releasing lock is not important here
+
+enforcing a strict order of lock acquisition prevent lock
+
+other techniques:
+deadlock detection : 

@@ -1,0 +1,6 @@
+race condition
+
+when multiple thread access to shared resource and at least want to modify that
+and schedule other thread may cause incorrect result
+
+identifying critical section where race condition is happening
