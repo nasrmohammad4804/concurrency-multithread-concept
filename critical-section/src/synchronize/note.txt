@@ -1,0 +1,37 @@
+we must identify critical section and use synchronize block as little as possible
+because use synchronization block at everywhere cause poor performance
+we only use critical section need to be atomicity
+note . most  operations is not atomic
+
+
+atomic operations
+
+change object or reference refers to be atomic
+    Object x = new Object();
+    Object y = new Object();
+    a  = b;
+
+because above sentence setter and getters is atomic
+
+all assignment to primitive type are safe except long and double
+
+read and write to
+[int - short - byte - float - char - boolean] are atomic
+note int x = 2 is atomic but x++ is not atomic
+long and double is 8 bit and dont guarantee it may do with 2 operation
+x = y
+[x.lower_32_bit <- y.lower_32_bit]
+[x.upper_64_bit <- y.upper_32_bit]
+
+for double and long we use volatile keyword that guarantee read and write to it is atomic
+
+then assignment to long and double is atomic if we use volatile that guarantee cpu execute that by single hardware operation
+----------------------------------
+
+summary
+
+atomic operation
+
+assignment to primitive type and reading that (exclude double and long) int x = 2 is atomic
+assignment to references int x = 3 , int y  = x (is atomic)
+assignment to double and long using volatile keyword
