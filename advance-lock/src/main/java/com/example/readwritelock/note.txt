@@ -1,0 +1,14 @@
+why we need to use two lock one for write and another for read
+
+race condition
+    multiple thread sharing resource and at least one thread modifying that
+    solution : complete mutual exclusion regardless of operation (read - write - both)
+
+
+but consider scenario mostly reading and little modifying such as cache
+
+we had multiple reader and one writer
+
+reentrantLock and synchronization dont allow to have multiple reader access to shared resource
+we want to have multiple reader and 1 writer . and if we dont have writer reader concurrently read resource
+
