@@ -1,0 +1,3 @@
+semaphore is not great for lock because is  different usage with lock
+
+semaphore can release without acquire but in lock we can unlock if already locked
