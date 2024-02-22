@@ -1,0 +1,29 @@
+we lock object at beginning of critical section
+and all code related to critical section we write them in try block
+and write unlock at finally block because for any reason any exception thrown we unlocked object
+
+either we had more complexity while using ReentrantLock over synchronization but had few advantage
+
+more control over lock
+more feature and more operation
+such as getQueuedThreads() list of thread wait to acquire lock
+
+
+if we want to guarantee fairness (starvation) (for example if 1 thread get lock and unlock and repeat those cycle but other thread can't
+be acquired lock )
+
+
+In a fair locking policy, the lock is granted to the thread that has been waiting the longest
+
+In an unfair locking policy, the lock is granted to any waiting thread, regardless of how long it has been waiting. This can lead to scenarios where some threads are starved while others repeatedly acquire the lock.
+
+consider use fair policy may reduce throughput of application
+
+
+tryLock() method of ReentrantLock is return true of lock is available and return false if unavailable and important note is that dont suspend thread and
+we find we cant use shared resource and goes to critical section instead we execute code that dont need to shared resource
+
+realtime application where suspending a thread on lock method is unacceptable
+such as video/image processing
+high speed / low latency trading system
+user interface application
