@@ -1,0 +1,6 @@
+
+condition used with lock
+
+semaphore is particular type of condition variable
+if condition awaited it release lock and suspended until another thread signal that
+it work like wait and notify with synchronization block
