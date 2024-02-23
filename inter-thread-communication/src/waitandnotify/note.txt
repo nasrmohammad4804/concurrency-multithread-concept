@@ -1,0 +1,15 @@
+
+as mentioned earlier wait and notify work same as lock and condition
+
+wait() . cause current thread to wait until another thread wake it up
+in wait step the thread dont consume any cpu resource because state is blocked and dont scheduled by cpu
+
+
+2 way for wake up waiting thread :
+    notify() : wake up single thread waiting for that object
+    notifyAll() : wake upp all thread waiting for that object
+
+
+for call wait and notify and notifyAll we need to acquire monitor of that object ( using synchronize for that object )
+
+current object as condition variable as well as lock object

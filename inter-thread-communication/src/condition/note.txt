@@ -1,6 +1,8 @@
 
 condition used with lock
+lock is used to checking condition and modifying share resource be atomic
 
 semaphore is particular type of condition variable
 if condition awaited it release lock and suspended until another thread signal that
 it work like wait and notify with synchronization block
+if no thread wait for condition we use signal dont impact but if use semaphore.release() it cause to future can acquire lock for using critical section
