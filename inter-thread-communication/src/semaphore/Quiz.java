@@ -80,9 +80,9 @@ public class Quiz {
                 lock.unlock();
 
                 int end = 1;
-                while (end < count) {
+                while (end++ < count) {
                     semaphore.release();
-                    end++;
+
                 }
 
             }
