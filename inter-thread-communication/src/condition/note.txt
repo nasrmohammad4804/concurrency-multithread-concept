@@ -1,6 +1,6 @@
 
 condition used with lock
-lock is used to checking condition and modifying share resource be atomic
+lock is used to checking condition and modifying share resource in condition  be atomic
 
 semaphore is particular type of condition variable
 if condition awaited it release lock and suspended until another thread signal that
