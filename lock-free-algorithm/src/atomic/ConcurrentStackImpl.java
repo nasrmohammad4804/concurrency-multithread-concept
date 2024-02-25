@@ -153,6 +153,12 @@ class StackTest {
         }
     }
 
+    /*
+    * we use compareAndSet for lock free algorithm
+    * for check between duration of read data and time we want to update any other thread change that
+    * if don't changed it means it atomic and we can update it otherwise it need to process later
+    * we use while because may occur few push or pop concurrent and we need few attempt to succeed.
+    * */
     private static class LockFreeStackImpl<E extends Comparable<E>> implements CustomStack<E> {
 
         private final AtomicReference<StackNode<E>> head = new AtomicReference<>();
