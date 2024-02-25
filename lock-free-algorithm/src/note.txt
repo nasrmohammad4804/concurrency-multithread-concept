@@ -1,0 +1,56 @@
+what's wrong with lock?
+as engineer, we always faced with tradeoff
+most problem there more than one solution
+being able to choose right tool for job is what make good engineer
+------------------------------------------------
+
+few issue of lock
+
+1 . cause deadlock .
+    deadlock are generally unrecoverable
+    more lock in application the higher chance for deadlock
+
+2. slow critical section
+    it need to 1 thread hold lock and another thread wait for that
+
+3. priority inversion
+    consider 2 thread document save is low priority and user interface of is higher priority
+    and lower priority already scheduled by os and acquired lock
+    after that always higher priority scheduled and because already lock acquired then it cant to acquire it.
+4. we have performance overhead while using lock
+    thread A acquire lock
+    thread B tries to acquire lock and get blocked
+    thread B is scheduled out (context switch)
+    thread B is scheduled back (context switch)
+
+all earlier solution is software support for we had atomic operation
+------------------------------------------------
+also we can use hardware solution for atomic (some thread access to shared resource and at least one of them want to modify that)
+
+for example int x =2 -> x++ is 3 hardware instruction (read - calculate new value - store)
+we guarantee complex action be atomic and execute as single hardware instruction
+
+
+------------------
+all atomic operation
+
+read/assignment on all primitive type except long and double
+read/assignment on all references
+read/assignment on volatile long and double
+----------------------
+avoid data race
+
+read/assignment on all volatile primitive and reference type
+
+-------------------------------------
+class located in java.util.concurrent.atomic package
+provide atomic operation and cause multiple instruction execute atomic as 1 hardware instruction .
+internally uses unsafe class which provide access to low level . native methods .
+utilize platform specific implementation of atomic operation
+
+by use atomic class we achieve atomicity with 1 hardware operation and dont need use lock and maybe cause lock problem
+
+compareAndSet method available for all atomic class
+compile into an atomic hardware operation
+
+many other atomic method internally implemented using CAS (compareAndSet)
