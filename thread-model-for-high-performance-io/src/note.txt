@@ -1,0 +1,77 @@
+1. first approach for task involve blocking call is thread per task or thread per request
+if we design number of thread a huge that cause many stack created for that and cause memory leak
+if we design number of thread a few that cause achieve low performance and throughput
+also if we had a lot of blocking call for example every task had 100 time blocking call or blocking io operation may lead to trashing
+and lot time of cpu spent for os management (context switch - scheduling and rescheduling) instead of doing task
+this approach improve performance of application but dont give us optimal performance
+
+issue :
+    when thread is blocking io . it cannot be used
+    required to allocate more thread
+    consume more resource and memory
+    adding context switch overhead
+2. second approach that used in long io operation (for example use lot for database . filesystem . network request and so on)
+we use async model . we dont block thread for io blocking instead we define callback
+and after io operation is completed then those code on callback executed
+
+this approach had better performance and we need to create many thread
+because we dont have blocking call . you can consider it as nonblocking and you need to create number of thread as well as cpu core for run in parallel
+it has better performance and resource allocation .
+in thread per task model if task use service call and wait long time cause other task wait to give released and not good solution
+
+
+our solution for most application we design contain blocking call such as (request to another service . query to db . read file and so on)
+
+1. thread per task (tomcat with spring boot use this model ) give good performance but not optimal performance
+    advantage:
+        create more task with limited number if needed because previous task blocked and cpu is idle we can run new task
+        used commonly
+
+    disadvantage:
+        if we design few number it lead poor performance
+        if we design lot number it cause memory leak and use very resource
+
+2. thread per core (nonblocking io operation )
+
+    advantage:
+
+        if we use this approach we dont block thread for any io operation instead we define callback that execute after operation completed very similar to async and await in js)
+        by this approach we always utilize cpu and dont have cpu overhead for context switch
+        we define fewer thread . lead fewer resource usage
+        it can be used for any type of application contain io bound or cpu bound
+        stable against issue or crashed of other system we use it with service call
+
+        proc:
+        1. can be used with thread per core model
+        2. improve performance
+        3. minimize context switch and memory overhead
+        4. make our system stable
+
+        cons:
+            hard to write . test. debug . read
+            need to use external framework . jdk doesn't provide  easy way to write that
+
+    disadvantage:
+        1.code readability
+        for example you had 3 service call and each on depend on result of previous
+        result1 = blockingOperation1();
+        result2 = blockingOperation2(result1);
+        result3 = blockingOperation3(result2);
+
+        by using async model like this :
+            pseudocode :  blockingOperation1( () -> {
+                blockingOperation2( result1,(result2) -> {
+                    blockingOperation3( result2,(result3) -> {
+
+                    }
+                }
+            }
+            this referred to callback hell in js world . generally hard to read maintain test and debug
+            nonblocking io os method are very hard to work with
+            jdk provide only thin layer of abstraction on top of those low level api that are still extremely hard to work with directly
+
+
+
+         2. most project use third party library like netty . vert.x . webflux
+            it add lot complexity to our code
+
