@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.stream.IntStream;
@@ -7,6 +5,7 @@ import java.util.stream.IntStream;
 public class Main {
 
     private static final int THREAD_NUMBER = 1000;
+    private static final int CPU_CORE_NUMBER = Runtime.getRuntime().availableProcessors();
 
     public static void main(String[] args) throws InterruptedException {
 
@@ -35,7 +34,7 @@ public class Main {
 
 //        calculation with platform with 8 thread as number of cpu core and each task take 1 second
 //        in best scenario every second finished 8 operation and 1000 task take 125 second around it but with context switch between that it take 126 second
-//        calculateCompletionPlatformThread();
+        calculateCompletionPlatformThread();
 
 
         /* calculation with virtual thread with number of platform thread as well as cpu core(8) each virtual task when
@@ -46,7 +45,7 @@ public class Main {
          *
          */
 //        calculationCompletionVirtualThread();
-        System.out.println(Runtime.getRuntime().availableProcessors());
+
     }
 
     private static void calculateCompletionPlatformThread() throws InterruptedException {
@@ -55,7 +54,7 @@ public class Main {
 
         Runnable blockingTask = new BlockingTask();
 
-        try (ExecutorService threadPool = Executors.newFixedThreadPool(8)) {
+        try (ExecutorService threadPool = Executors.newFixedThreadPool(CPU_CORE_NUMBER)) {
 
             IntStream.rangeClosed(1, THREAD_NUMBER)
                     .forEach(index -> {
@@ -67,25 +66,15 @@ public class Main {
         System.out.println("all task completed as platform after : " + (System.currentTimeMillis() - startTime) + " ms");
     }
 
-    private static void calculationCompletionVirtualThread() throws InterruptedException {
+    private static void calculationCompletionVirtualThread()  {
 
         Runnable blockingTask = new BlockingTask();
-
-        List<Thread> threads = new ArrayList<>();
         long startTime = System.currentTimeMillis();
 
-        IntStream.rangeClosed(1, THREAD_NUMBER)
-                .forEach(index -> {
-                    Thread thread = Thread.ofVirtual().unstarted(blockingTask);
-                    threads.add(thread);
-                });
-
-        for (int index = 0; index < THREAD_NUMBER; index++)
-            threads.get(index).start();
-
-        for (Thread thread : threads)
-            thread.join();
-
+        try(ExecutorService executorService = Executors.newVirtualThreadPerTaskExecutor()) {
+                IntStream.rangeClosed(1,THREAD_NUMBER)
+                        .forEach(index -> executorService.submit(blockingTask));
+        }
 
         System.out.println("all task completed as virtual after : " + (System.currentTimeMillis() - startTime) + " ms");
     }
