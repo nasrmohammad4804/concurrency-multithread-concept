@@ -1,0 +1,50 @@
+by creating normal thread and start jvm ask to os create os thread
+and called platform thread . and those are expensive and heavy .
+because each platform thread maps to 1 to 1 os thread
+
+new type of thread is virtual thread introduced at jdk 21
+
+virtual thread .  fully belong and is managed by jvm and does not come with fix size of stack
+os takes no role in creating or managing it and even aware of it.
+it like other java object stored at heap and garbage collected while don't be used or don't have any reference.
+
+unlike platform thread that very expensive and heavy for created (because created by os managed by os with context switch and map 1 to 1 java thread object and os thread)
+virtual thread creation are very cheap and fast to create in large quantities.
+
+management and scheduling platform thread is out of our control
+--------------------------------------------
+summary
+    introduce to virtual thread
+    review platform thread :
+        those are expensive
+        have fixed size stack memory
+        map 1 to 1 to os thread which are limited resource
+
+    virtual thread:
+        just like any other java object on heap
+        mounting/unmounting allow scheduling of many virtual thread on limited number of platform thread with number same as cpu core for achieve better parallelism
+
+
+
+. performance benefit of virtual thread
+if virtual thread task represent only cpu operation it doesn't give any performance benefit
+but if some task need to blocking operation its very useful for performance/ throughput
+notice it same as nonblocking doesn't any overhead for context switch
+because os is not involved in the scheduling. note mount and unmounting virtual thread is not context switch it handle in jvm
+context switch occurred between platform thread related to os thread and manage by os between every io operation
+and context switch .  but in virtual thread  it doesn't manage by os it manages by jvm
+and os doesn't anything about that.
+create virtual thread mounting to platform thread and unmounting blocked virtual thread had overhead but it is very fewer
+in comparison context switch that occurred in os layer
+
+-----------------------
+best practice about virtual thread.
+
+1.it doesnt any benefit for task 100% cpu operation
+2.it doesn't improve latency for example a task that some cpu operation 10 ms and after send network request with 100ms to take it this task completed after 110 ms it only improve throughput
+3.short and frequent blocking call are very inefficient . if we have to make such call inside our code virtual thread are much better platform thread because cost of overhead for mount/unmount is less than cost of context switching between platform thread
+    solution : batch short io operation into less frequent but long io operation whenever possible
+
+4. never create fix size pool of virtual thread . jvm already create internal pool of platform thread for us . and it increases and decrease on demand . preferred way to use virtual thread is using Executors.newVirtualThreadPerTaskExecutor()
+5. virtual thread is always daemon . and if you manually set it to daemon throw exception
+6. observability and debugging . virtual thread are running on top of carrier thread is hide from us
